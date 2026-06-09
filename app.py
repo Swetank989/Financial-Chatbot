@@ -13,18 +13,31 @@ from utils.llm import (
     summarize_document
 )
 
-st.set_page_config(
-    page_title="Financial Document Chatbot"
-)
+st.set_page_config(page_title="Financial Document Chatbot")
 
 st.title("Financial Document Chatbot")
+
+# Session State Initialization
+if "processed" not in st.session_state:
+    st.session_state.processed = False
 
 uploaded_file = st.file_uploader(
     "Upload Financial Report",
     type=["pdf"]
 )
 
+# Detect New File Upload
 if uploaded_file:
+
+    if (
+        "current_file" not in st.session_state
+        or st.session_state.current_file != uploaded_file.name
+    ):
+        st.session_state.processed = False
+        st.session_state.current_file = uploaded_file.name
+
+# Process PDF Only Once
+if uploaded_file and not st.session_state.processed:
 
     with st.spinner("Processing document..."):
 
@@ -45,6 +58,20 @@ if uploaded_file:
 
         vector_store = create_vector_store(embeddings)
 
+        # Store in Session State
+        st.session_state.text = text
+        st.session_state.chunks = chunks
+        st.session_state.vector_store = vector_store
+
+        st.session_state.processed = True
+
+# Main App
+if st.session_state.processed:
+
+    text = st.session_state.text
+    chunks = st.session_state.chunks
+    vector_store = st.session_state.vector_store
+
     st.success("Document Ready")
 
     # Summary Button
@@ -58,7 +85,7 @@ if uploaded_file:
 
         st.write(summary)
 
-    # Question Section
+    # Question Box
     query = st.text_input(
         "Ask a question about the document"
     )

@@ -17,7 +17,7 @@ st.set_page_config(
     page_title="Financial Document Chatbot"
 )
 
-st.title("📊 Financial Document Chatbot")
+st.title("Financial Document Chatbot")
 
 uploaded_file = st.file_uploader(
     "Upload Financial Report",
@@ -45,10 +45,10 @@ if uploaded_file:
 
         vector_store = create_vector_store(embeddings)
 
-    st.success("✅ Document Ready")
+    st.success("Document Ready")
 
     # Summary Button
-    if st.button("📄 Summarize Document"):
+    if st.button("Summarize Document"):
 
         with st.spinner("Generating Summary..."):
 

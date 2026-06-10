@@ -88,7 +88,7 @@ if st.session_state.processed:
 
     st.success("Document Ready")
 
-    st.markdown("### Action to perform")
+    st.markdown("Action to perform")
 
     col1, col2 = st.columns(2)
 
@@ -113,7 +113,7 @@ if st.session_state.processed:
 
             summary = summarize_document(text)
 
-        st.markdown("## Document Summary")
+        st.markdown("Document Summary")
 
         st.success(summary)
 
@@ -126,13 +126,13 @@ if st.session_state.processed:
 
             analysis = financial_analysis(text)
 
-        st.markdown("## Financial Analysis")
+        st.markdown("Financial Analysis")
 
         st.success(analysis)
 
     st.markdown("---")
 
-    st.markdown("### Ask Questions")
+    st.markdown("Ask Questions")
 
     query = st.text_input(
         "Ask a question about the document"
@@ -158,7 +158,7 @@ if st.session_state.processed:
                 context
             )
 
-        st.markdown("##Answer")
+        st.markdown("Answer")
 
         st.info(answer)
 

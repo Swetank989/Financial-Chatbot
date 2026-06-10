@@ -10,14 +10,17 @@ from utils.vector_store import create_vector_store
 from utils.retrieval import search_chunks
 from utils.llm import (
     generate_answer,
-    summarize_document
+    summarize_document,
+    financial_analysis
 )
 
-st.set_page_config(page_title="Financial Document Chatbot")
+st.set_page_config(
+    page_title="Financial Document Chatbot"
+)
 
-st.title("Financial Document Chatbot")
+st.title("📊 Financial Document Chatbot")
 
-# Session State Initialization
+# Session State
 if "processed" not in st.session_state:
     st.session_state.processed = False
 
@@ -26,7 +29,7 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
-# Detect New File Upload
+# Detect New Upload
 if uploaded_file:
 
     if (
@@ -36,7 +39,7 @@ if uploaded_file:
         st.session_state.processed = False
         st.session_state.current_file = uploaded_file.name
 
-# Process PDF Only Once
+# Process PDF Once
 if uploaded_file and not st.session_state.processed:
 
     with st.spinner("Processing document..."):
@@ -58,24 +61,23 @@ if uploaded_file and not st.session_state.processed:
 
         vector_store = create_vector_store(embeddings)
 
-        # Store in Session State
         st.session_state.text = text
         st.session_state.chunks = chunks
         st.session_state.vector_store = vector_store
 
         st.session_state.processed = True
 
-# Main App
+# Main Interface
 if st.session_state.processed:
 
     text = st.session_state.text
     chunks = st.session_state.chunks
     vector_store = st.session_state.vector_store
 
-    st.success("Document Ready")
+    st.success("✅ Document Ready")
 
     # Summary Button
-    if st.button("Summarize Document"):
+    if st.button("📄 Summarize Document"):
 
         with st.spinner("Generating Summary..."):
 
@@ -85,7 +87,18 @@ if st.session_state.processed:
 
         st.write(summary)
 
-    # Question Box
+    # Financial Analysis Button
+    if st.button("📈 Financial Analysis"):
+
+        with st.spinner("Analyzing Financial Report..."):
+
+            analysis = financial_analysis(text)
+
+        st.subheader("Financial Analysis")
+
+        st.write(analysis)
+
+    # Question Answering
     query = st.text_input(
         "Ask a question about the document"
     )

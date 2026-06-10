@@ -20,27 +20,28 @@ Financial Analysis
     Performs high-level financial analysis.
     Identifies:Revenue trends, Profitability insights, Business risks, Growth opportunities
   
-Frontend
+Frontend:
     Streamlit
 
-Backend
+Backend:
     Python
 
-AI / Machine Learning
-    Sentence Transformers
-    all-MiniLM-L6-v2 Embedding Model
-    Ollama
-    Llama 3
-Vector Database
+AI / Machine Learning:
+    Sentence Transformers,
+     all-MiniLM-L6-v2 Embedding Model,
+     Ollama,
+     Llama 3
+
+Vector Database:
     FAISS
 
-PDF Processing
+PDF Processing:
     pdfplumber
 
-Installation
+Installation:
     Clone Repository and Install Dependencies
 
-Install Ollama
+Install Ollama:
 Download and install Ollama:
 
     https://ollama.com
@@ -48,7 +49,7 @@ Download and install Ollama:
         bash
         ollama pull llama3
 
-Running the Application
+Running the Application:
 
     bash
     streamlit run app.py
